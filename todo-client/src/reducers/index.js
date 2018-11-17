@@ -4,14 +4,11 @@ const initialState = {
   todos: [{"name":"AAAA", "status": "Pending"}],
   openTodoModal : false
 };
-const todoReducer = (state = initialState, action) => {
+const todoReducer = (state = initialState.todos, action) => {
 
   switch (action.type) {
-    case  "OPEN_ADD_TODO" :
-    return {
-      ...state,
-      openTodoModal : true
-    }
+    case  "ADD_NEW_TODO" :
+    return [...state, action.payload];
 
     default :
       return state;
@@ -19,6 +16,18 @@ const todoReducer = (state = initialState, action) => {
   }
 };
 
+const appReducer = (state = initialState, action) => {
+  switch(action.type){
+    case  "OPEN_ADD_TODO" :
+      return true;
+
+    default :
+      return state;
+
+  }
+}
+
 export default combineReducers({
-  todos : todoReducer
+  openTodoModal : appReducer,
+  todos: todoReducer
 });

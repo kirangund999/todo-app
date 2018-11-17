@@ -10,9 +10,10 @@ export const closeAddTodoDialog = () => {
     }
 }
 
-export const addNewTodo = (e) => {
+export const addNewTodo = (todo) => {
     return{
-        type : ''
+        type : 'ADD_NEW_TODO',
+        payload: todo
     }
 
 }

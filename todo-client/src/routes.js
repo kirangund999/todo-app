@@ -9,8 +9,6 @@ export default class TodoRouter extends React.Component{
             <Router>
                 <div>
                     <Route exact path='/' component={App}></Route>
-                    <Route path='/new' component={App}></Route>
-                    
                 </div>
                 
             </Router>

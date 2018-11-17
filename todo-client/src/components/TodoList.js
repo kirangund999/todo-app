@@ -4,9 +4,21 @@ import Todo from './Todo';
 
 export default class TodoList extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.setState({"todos": props.todos});
+    
+        this.state = { isOpen: false };
+      }
+
+    toggleModal = (e) => {        
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
+    }
+
+    onTodoSave = (todo) => {
+        this.props.addNewTodo(todo);
+        this.toggleModal();
     }
 
     render(){
@@ -14,11 +26,8 @@ export default class TodoList extends React.Component {
         return (
             <div className="col-md-12">
                 <h3 className="centerAlign">Todo List</h3>
-                <button onClick={this.props.openAddTodoDialog}>Add Todo</button>
-                {
-                    this.props.openTodoModal && 
-                    <Todo/>
-                }
+                <button onClick={this.toggleModal}>Add Todo</button> 
+                        <Todo show={this.state.isOpen} toggleModal={this.toggleModal} submitForm = {this.onTodoSave}/>
                 <table className="table booksTable">
                     <thead>
                         <th>Todo</th>
@@ -32,7 +41,7 @@ export default class TodoList extends React.Component {
                             <tr key={todo.id}>
                                 <td >{todo.name}</td>
                                 <td >{todo.status}</td>
-                                <td><input type='checkbox' onChange={this.props.editStatus}></input></td>
+                                <td><input type='checkbox' onChange={this.props.editStatus} checked={!!todo.status=="Completed"} ></input></td>
                                 <td><a onClick={this.props.opendeleteTodoDialog}>Delete</a></td>
                             </tr>
                         ))}
