@@ -17,6 +17,8 @@ export default class TodoList extends React.Component {
     }
 
     onTodoSave = (todo) => {
+        
+        data.append("name", todo.name);
         this.props.addNewTodo(todo);
         this.toggleModal();
     }

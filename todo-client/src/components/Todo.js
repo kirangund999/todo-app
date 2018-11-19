@@ -11,26 +11,24 @@ export default class Todo extends React.Component {
         status : "Pending"
       };
 
-      this.handleTextChange = this.handleTextChange.bind(this);
-      this.handleSelectChange = this.handleSelectChange.bind(this);
+      this.handleChange = this.handleChange.bind(this);
       this.saveModal = this.saveModal.bind(this);
 
 
     }
   
-    handleTextChange(e){
-        this.setState({"name" : e.target.value});
-        this.setState({"status" : e.target[e.target.selectedIndex].value});
-    }
-
-    handleSelectChange(e){
-        this.setState({"name" : e.target.value});
-        this.setState({"status" : e.target[e.target.selectedIndex].value});
+    handleChange(e){
+        let frm = document.forms["newTodoForm"];
+        this.setState({"name" : frm.elements.todoName.value});
+        this.setState({"status" : frm.elements.todostatus.options[frm.elements.todostatus.selectedIndex].value});
     }
     
     saveModal(){
         if(this.state.name && this.state.status){
-            return this.props.submitForm({name:this.state.name, status:this.state.status});
+            const data = new FormData();
+            data.append("name", this.state.name);
+            data.append("status", this.state.status);
+            return this.props.submitForm(data);
         }
         alert("Please fill the Todo form.");
     }
@@ -41,25 +39,24 @@ export default class Todo extends React.Component {
        
           <Modal show={this.props.show} onHide={this.props.toggleModal}>
             <Modal.Header closeButton>
-              <Modal.Title>Modal heading</Modal.Title>
+              <Modal.Title>New Todo</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               
-                <h4>New Todo</h4>
                 <p>
-                    <form>
+                    <form name="newTodoForm">
                         <FormGroup controlId="todoName">
                             <ControlLabel>Todo Name</ControlLabel>
                             <FormControl
                                 type="text"
                                 value={this.state.value}
                                 placeholder="Enter text"
-                                onChange={this.handleTextChange}
+                                onChange={this.handleChange}
                             />
                         </FormGroup>
                         <FormGroup controlId="todostatus">
                             <ControlLabel>Status</ControlLabel>
-                            <FormControl componentClass="select" placeholder="select" onChange={this.handleSelectChange}>
+                            <FormControl componentClass="select" placeholder="select" onChange={this.handleChange}>
                                 <option value="Pending" selected>Pending</option>
                                 <option value="Completed">Completed</option>
                             </FormControl>

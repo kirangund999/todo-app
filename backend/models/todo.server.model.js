@@ -4,7 +4,7 @@ var Schema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  fullName: String,
-  todoText: String
+  name: String,
+  status: String
 });
 export default mongoose.model('Todo', Schema);
