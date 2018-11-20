@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import TodoList from '../components/TodoList';
-import {openAddTodoDialog, editStatus, opendeleteTodoDialog, addNewTodo} from '../actions/TodoActions';
+import {openAddTodoDialog, editStatus, opendeleteTodoDialog, addNewTodo, fetchTodos} from '../actions/TodoActions';
 
 const mapStateToProps = (state) => {
     return {
@@ -9,7 +9,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    openAddTodoDialog, editStatus, opendeleteTodoDialog, addNewTodo
+    openAddTodoDialog, editStatus, opendeleteTodoDialog, addNewTodo, fetchTodos
 }
 
 //const mapDispatchToProps;

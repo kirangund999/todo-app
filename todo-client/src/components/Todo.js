@@ -28,7 +28,8 @@ export default class Todo extends React.Component {
             const data = new FormData();
             data.append("name", this.state.name);
             data.append("status", this.state.status);
-            return this.props.submitForm(data);
+            const todo = {"name" : this.state.name, "status" : this.state.status};
+            return this.props.submitForm(todo);
         }
         alert("Please fill the Todo form.");
     }

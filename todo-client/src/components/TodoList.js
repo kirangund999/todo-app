@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import Todo from './Todo';
+import Todo from '../containers/TodoContainer';
 
 export default class TodoList extends React.Component {
 
@@ -18,9 +18,12 @@ export default class TodoList extends React.Component {
 
     onTodoSave = (todo) => {
         
-        data.append("name", todo.name);
         this.props.addNewTodo(todo);
         this.toggleModal();
+    }
+
+    componentWillMount(){
+        this.props.fetchTodos();
     }
 
     render(){
@@ -35,7 +38,6 @@ export default class TodoList extends React.Component {
                         <th>Todo</th>
                         <th>Status</th>
                         <th>Completed?</th>
-                        <th>Edit</th>
                         <th>Delete</th>
                     </thead>
                     <tbody>

@@ -12,15 +12,57 @@ export const closeAddTodoDialog = () => {
     }
 }
 
+export const fetchTodos = () => {
+    return (dispatch) => {
+        dispatch(fetchTodosRequest());
+        return fetch(url, {
+            method: 'GET'
+        }).then(response => {
+            if(response.ok){
+                response.json().then(data => {
+                    dispatch(fetchTodosRequestSuccess(data.todos, data.message));
+                });
+            }else{
+                response.json().then(error => {
+                    dispatch(fetchTodosRequestFailed(error));
+                });
+            }
+        })
+    }
+}
+
+export const fetchTodosRequest = () => {
+    return{
+        type : 'FETCH_TODO_REQUEST'
+    }
+}
+
+export const fetchTodosRequestSuccess = (todos, message) => {
+    return {
+        type : 'FETCH_TODO_REQUEST_SUCCESS',
+        todos: todos,
+        message: message
+    }
+}
+
+export const fetchTodosRequestFailed = (error) => {
+    return {
+        type : 'FETCH_TODO_REQUEST_FAILED',
+        error: error
+    }
+}
+
+
 export const addNewTodo = (todo) => {
     return (dispatch) => {
         dispatch(addNewTodoRequest(todo));
         return fetch(url,{
             method: 'POST',
-            body: todo
+            body: JSON.stringify(todo),
+            
         }).then(response => {
             if(response.ok){
-                response.json().then(data => {console.log(data.todo);
+                response.json().then(data => {
                   dispatch(addNewTodoRequestSuccess(data.todo, data.message))
                 })
               }
@@ -32,11 +74,50 @@ export const addNewTodo = (todo) => {
         });
     }
     
-    
 }
 
-export const editStatus = () => {
+export const editStatus = (todo) => {
+    return (dispatch)  => {
+        dispatch(editStatusRequest(todo));
+        return fetch(url, {
+            method: 'PUT',
+            body : JSON.stringify(todo),
+            headers: {
+                'Content-Type': 'application/json'
+              }
+        }).then(response => {
+            if(response.ok){
+                response.json().then(data => {
+                    dispatch(editStatusRequestSuccess(data.todo, data.message));
+                });
+            }else{
+                response.json().then(error => {
+                    dispatch(editStatusRequestFailed(error));
+                });
+            }
+        });
+    }
+}
 
+export const editStatusRequest = () => {
+    return{
+        type : 'EDIT_STATUS_REQUEST'
+    }
+}
+
+export const editStatusRequestSuccess = (todo, message) => {
+    return {
+        type : 'EDIT_STATUS_REQUEST_SUCCESS',
+        todo: todo,
+        message: message
+    }
+}
+
+export const editStatusRequestFailed = (error) => {
+    return {
+        type : 'EDIT_STATUS_REQUEST_FAILED',
+        error: error
+    }
 }
 
 export const opendeleteTodoDialog = () => {
@@ -50,14 +131,17 @@ export const addNewTodoRequest = (todo) => {
     }
 }
 
-export const addNewTodoRequestSuccess = () => {
+export const addNewTodoRequestSuccess = (todo, message) => {
     return {
         type : 'ADD_NEW_TODO_REQUEST_SUCCESS',
+        todo: todo,
+        message: message
     }
 }
 
-export const addNewTodoRequestFailed = () => {
+export const addNewTodoRequestFailed = (error) => {
     return {
         type : 'ADD_NEW_TODO_REQUEST_FAILED',
+        error:error
     }
 }

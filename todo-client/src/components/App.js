@@ -1,7 +1,6 @@
 
 import React from "react";
 import TodoList from "../containers/TodoListContainer";
-//import TodoList from '../components/TodoList';
 const App = (props) => (
   <div className="row mt-5">
     <div className="col-md-4 offset-md-1">
