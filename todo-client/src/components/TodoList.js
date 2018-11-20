@@ -45,7 +45,7 @@ export default class TodoList extends React.Component {
                             <tr key={todo.id}>
                                 <td >{todo.name}</td>
                                 <td >{todo.status}</td>
-                                <td><input type='checkbox' onChange={this.props.editStatus} checked={!!todo.status=="Completed"} ></input></td>
+                                <td><input type='checkbox' onChange={this.props.editStatus} id={todo._id} checked={!!todo.status=="Completed"} ></input></td>
                                 <td><a onClick={this.props.opendeleteTodoDialog}>Delete</a></td>
                             </tr>
                         ))}
