@@ -13,6 +13,16 @@ const todoReducer = (state = initialState.todos, action) => {
     case "FETCH_TODO_REQUEST_SUCCESS" :
       return action.todos;
 
+    case "EDIT_STATUS_REQUEST_SUCCESS" : {
+      return state.map(todo => {
+          if(todo._id == action.todo._id){
+            return action.todo;
+          }
+          return todo;
+      });
+      
+    }
+
     default :
       return state;
 

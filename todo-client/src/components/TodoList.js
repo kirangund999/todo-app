@@ -8,7 +8,7 @@ export default class TodoList extends React.Component {
         super(props);
     
         this.state = { isOpen: false };
-        this.handlCheckBox = this.handlCheckBox.bind(handlCheckBox);
+        this.handlCheckBox = this.handlCheckBox.bind(this);
     }
 
     handlCheckBox = (e) => {
@@ -64,7 +64,7 @@ export default class TodoList extends React.Component {
                             <tr key={todo.id}>
                                 <td >{todo.name}</td>
                                 <td >{todo.status}</td>
-                                <td><input type='checkbox' onChange={this.handlCheckBox} id={todo._id} checked={!!todo.status=="Completed"} ></input></td>
+                                <td><input type='checkbox' onChange={this.handlCheckBox} id={todo._id} checked={todo.status=="Completed"} ></input></td>
                                 <td><a onClick={this.props.opendeleteTodoDialog}>Delete</a></td>
                             </tr>
                         ))}

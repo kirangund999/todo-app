@@ -59,7 +59,9 @@ export const addNewTodo = (todo) => {
         return fetch(url,{
             method: 'POST',
             body: JSON.stringify(todo),
-            
+            headers: {
+                'Content-Type': 'application/json'
+              }
         }).then(response => {
             if(response.ok){
                 response.json().then(data => {

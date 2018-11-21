@@ -16,6 +16,7 @@ export const addTodo = (req,res) => {
 return res.json({'success':true,'message':'Todo added successfully',todo});
   })
 }
+
 export const updateTodo = (req,res) => {
   Todo.findOneAndUpdate({ _id:req.body.id }, req.body, { new:true }, (err,todo) => {
     if(err){
