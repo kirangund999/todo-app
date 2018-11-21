@@ -8,7 +8,26 @@ export default class TodoList extends React.Component {
         super(props);
     
         this.state = { isOpen: false };
-      }
+        this.handlCheckBox = this.handlCheckBox.bind(handlCheckBox);
+    }
+
+    handlCheckBox = (e) => {
+        let tId = e.target.id;
+        let selTodo = {};
+        const todos = this.props.todos;
+        for(let i=0, len = todos.length; i<len; i++){
+            if(todos[i]._id == tId){
+                selTodo.id = todos[i];
+                break;
+            }
+        }
+        if(e.target.checked){
+            selTodo.status = "Completed";
+        }else{
+            selTodo.status = "Pending";
+        }
+        this.props.editStatus(selTodo);
+    }
 
     toggleModal = (e) => {        
         this.setState({
@@ -45,7 +64,7 @@ export default class TodoList extends React.Component {
                             <tr key={todo.id}>
                                 <td >{todo.name}</td>
                                 <td >{todo.status}</td>
-                                <td><input type='checkbox' onChange={this.props.editStatus} id={todo._id} checked={!!todo.status=="Completed"} ></input></td>
+                                <td><input type='checkbox' onChange={this.handlCheckBox} id={todo._id} checked={!!todo.status=="Completed"} ></input></td>
                                 <td><a onClick={this.props.opendeleteTodoDialog}>Delete</a></td>
                             </tr>
                         ))}
