@@ -23,6 +23,12 @@ const todoReducer = (state = initialState.todos, action) => {
       
     }
 
+    case "DELETE_TODO_REQUEST_SUCCESS" : {
+      return state.filter(todo => {
+        return todo._id != action.todo._id;
+      });
+    }
+
     default :
       return state;
 

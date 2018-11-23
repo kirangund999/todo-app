@@ -1,6 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
 import Todo from '../containers/TodoContainer';
+import {Glyphicon} from 'react-bootstrap';
 
 export default class TodoList extends React.Component {
 
@@ -9,6 +9,7 @@ export default class TodoList extends React.Component {
     
         this.state = { isOpen: false };
         this.handlCheckBox = this.handlCheckBox.bind(this);
+        this.handleDeleteTodo = this.handleDeleteTodo.bind(this);
     }
 
     handlCheckBox = (e) => {
@@ -29,6 +30,12 @@ export default class TodoList extends React.Component {
         this.props.editStatus(selTodo);
     }
 
+    handleDeleteTodo = (e) => {
+        debugger;
+        let selTodo = {"id": e.target.id};
+        this.props.deleteTodo(selTodo);
+    }
+
     toggleModal = (e) => {        
         this.setState({
             isOpen: !this.state.isOpen
@@ -47,6 +54,7 @@ export default class TodoList extends React.Component {
 
     render(){
         const todos = this.props.todos;
+        const iconStyle = {"font-size": "20px", "color": "red", "cursor": "pointer"};
         return (
             <div className="col-md-12">
                 <h3 className="centerAlign">Todo List</h3>
@@ -65,7 +73,13 @@ export default class TodoList extends React.Component {
                                 <td >{todo.name}</td>
                                 <td >{todo.status}</td>
                                 <td><input type='checkbox' onChange={this.handlCheckBox} id={todo._id} checked={todo.status=="Completed"} ></input></td>
-                                <td><a onClick={this.props.opendeleteTodoDialog}>Delete</a></td>
+                                <td>
+                                    <span >
+                                        <Glyphicon bsSize="large" glyph="remove-circle" style={iconStyle} 
+                                            id={todo._id} onClick={this.handleDeleteTodo}
+                                        />
+                                    </span>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
@@ -76,5 +90,6 @@ export default class TodoList extends React.Component {
 
     }
 }
+
 
 

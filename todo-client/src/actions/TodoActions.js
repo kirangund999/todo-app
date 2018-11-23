@@ -147,3 +147,44 @@ export const addNewTodoRequestFailed = (error) => {
         error:error
     }
 }
+
+export const deleteTodo = (todo) => {
+    return (dispatch) => {
+        dispatch(deleteTodoRequest());
+        return fetch(url + todo.id,{
+            method: 'DELETE'
+        }).then(response => {
+            if(response.ok){
+                response.json().then(data => {
+                  dispatch(deleteTodoRequestSuccess({"_id":todo.id}, data.message))
+                })
+              }
+              else{
+                response.json().then(error => {
+                  dispatch(deleteTodoRequestFailed(error))
+                })
+              }
+        });
+    }
+}
+
+export const deleteTodoRequest = () => {
+    return{
+        type : 'DELETE_TODO_REQUEST'
+    }
+} 
+
+export const deleteTodoRequestSuccess = (todo, message) => {
+    return{
+        type : 'DELETE_TODO_REQUEST_SUCCESS',
+        todo: todo,
+        message: message
+    }
+}
+
+export const deleteTodoRequestFailed = (error) => {
+    return{
+        type : 'DELETE_TODO_REQUEST_FAILED',
+        error: error
+    }
+}
